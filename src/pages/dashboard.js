@@ -1,5 +1,5 @@
 import Sidebar from '../components/Sidebar'
-import Body from '../components/Sidebar/body'
+import Body from '../components/Body'
 
 export default function dashboard() {
     return (

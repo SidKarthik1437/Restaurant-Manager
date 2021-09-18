@@ -1,16 +1,35 @@
-import { firebase, FieldValue } from "../lib/firebase";
+import { firebase, FieldValue } from "../lib/firebase"
 
 export async function DoesUsernameExist(username) {
-    const result = await firebase.firestore().collection("users").where("username", "==", username).get();
+    const result = await firebase
+        .firestore()
+        .collection("users")
+        .where("username", "==", username)
+        .get()
     return result.docs.map((user) => user.data.length > 0)
-
 }
 
 export async function getUserByUserId(userId) {
-    const result = await firebase.firestore().collection("users").where("userId", "==", userId).get();
+    const result = await firebase
+        .firestore()
+        .collection("users")
+        .where("userId", "==", userId)
+        .get()
     const user = result.docs.map((item) => ({
-      ...item.data(),
-      docId: item.id
-    }));
-    return user;
-  }
+        ...item.data(),
+        docId: item.id,
+    }))
+    return user
+}
+
+export async function getRestaurantDetails(userId) {
+    const result = await firebase
+        .firestore()
+        .collection("restaurants")
+        .where("addedBy", "==", userId)
+        .get()
+    const res = result?.docs.map((item) => ({
+        ...item.data(0),
+    }))
+    return res
+}

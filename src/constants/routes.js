@@ -14,5 +14,8 @@ export const INVOICES = '/invoices'
 export const PRODUCTS = '/products'
 export const STAFF = '/staff'
 export const STOCK = '/stock'
+
+export const CHART = '/chart'
+export const MENU = '/menu'
 //#endregion
 export const NOT_FOUND = '/not-found';

@@ -1,54 +1,96 @@
 import * as Routes from "../../constants/routes"
 import { Link } from "react-router-dom"
+import FirebaseContext from "../../context/firebase"
+import UserContext from "../../context/user"
+import RestoContext from "../../context/restaurant"
+import { useContext, useEffect, useState } from "react"
+import { getRestaurantDetails } from "../../services/firebase"
 
 function Sidebar() {
+    const { firebase } = useContext(FirebaseContext)
+    const { user } = useContext(UserContext)
+
+    const [resto, setResto] = useState({})
+
+    useEffect(() => {
+        async function getrest() {
+            const [restaurant] = await getRestaurantDetails(user?.uid)
+            setResto(restaurant)
+        }
+        getrest()
+    }, [firebase])
+
     return (
         <div className="flex flex-col flex-shrink w-1/3 justify-between bg-background-sidebar h-screen rounded-r-xl items-center">
             <Link to={Routes.PROFILE}>
                 <button
                     type="button"
-                    className="text-3xl text-grey-res-head select-none mt-9 px-10 text-center justify-self-stretch rounded max-w-full h-11 tracking-wider shadow-neu-resn active:shadow-neu-resn-active"
+                    className="flex flex-grow pl-2 text-sm lg:text-2xl lg:px-2 text-grey-res-head place-items-center select-none mt-9 text-center w-full  shadow-neu-nav rounded h-12 tracking-wider active:shadow-neu-resn-active"
                 >
-                    Restaurant
+                    {resto.Name}
                 </button>
             </Link>
 
-            <div className="flex justify-evenly -mt-24 w-full">
-                <button type="button" className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active">
+            <div className="flex justify-evenly w-full">
+                <button
+                    type="button"
+                    className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active"
+                >
                     <img src="/icons/activity.svg" alt="Activity " />
                 </button>
-                <button type="button" className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active">
+                <button
+                    type="button"
+                    className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active"
+                >
                     <img src="/icons/notifications.svg" alt="Notifications" />
                 </button>
-                <button type="button" className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active">
+                <button
+                    type="button"
+                    className="flex shadow-neu-quick-action rounded-xl p-1 w-12 h-12 justify-center active:shadow-neu-resn-active"
+                >
                     <img src="/icons/tasks.svg" alt="Tasks" />
                 </button>
             </div>
 
-            <div className="flex flex-col ">
+            <div className="flex flex-col w-full lg:px-8">
                 <Link to={Routes.DASHBOARD}>
-                    <button type="button" className="flex flex-shrink text-3xl text-blue-nav-text select-none mt-9 text-center w-full px-10 shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active">
-                        Dashboard
+                    <button
+                        type="button"
+                        className="flex flex-grow pl-2 text-sm lg:text-2xl lg:px-2 text-blue-nav-text select-none mt-9  place-items-center justify-center text-center w-full  shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active"
+                    >
+                        <span>Dashboard</span>
                     </button>
                 </Link>
                 <Link to={Routes.INVOICES}>
-                    <button type="button" className="flex flex-shrink text-3xl text-blue-nav-text select-none mt-9 text-center w-full px-10 shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active">
-                        Invoices
+                    <button
+                        type="button"
+                        className="flex flex-grow  pl-2 text-sm lg:text-2xl lg:w-full text-blue-nav-text select-none mt-9  place-items-center justify-center text-center w-full  shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active"
+                    >
+                        <span>Invoices</span>
                     </button>
                 </Link>
                 <Link to={Routes.PRODUCTS}>
-                    <button type="button" className="flex flex-shrink text-3xl text-blue-nav-text select-none mt-9 text-center w-full px-10 shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active">
-                        Products
+                    <button
+                        type="button"
+                        className="flex flex-grow text-sm pl-2 lg:text-2xl lg:w-full text-blue-nav-text select-none mt-9  place-items-center justify-center text-center w-full  shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active"
+                    >
+                        <span>Products</span>
                     </button>
                 </Link>
                 <Link to={Routes.STAFF}>
-                    <button type="button" className="flex flex-shrink text-3xl text-blue-nav-text select-none mt-9 text-center w-full px-10 shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active">
-                        Staff
+                    <button
+                        type="button"
+                        className="flex flex-grow text-sm pl-2 lg:text-2xl lg:w-full text-blue-nav-text select-none mt-9  place-items-center justify-center text-center w-full  shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active"
+                    >
+                        <span>Staff</span>
                     </button>
                 </Link>
                 <Link to={Routes.STOCK}>
-                    <button type="button" className="flex flex-shrink text-3xl text-blue-nav-text select-none mt-9 text-center w-full px-10 shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active">
-                        Stock
+                    <button
+                        type="button"
+                        className="flex flex-grow text-sm lg:text-2xl pl-2 lg:px-10 text-blue-nav-text select-none mt-9 place-items-center justify-center text-center w-full  shadow-neu-nav rounded h-11 tracking-wider active:shadow-neu-resn-active"
+                    >
+                        <span>Stock</span>
                     </button>
                 </Link>
             </div>
@@ -60,7 +102,7 @@ function Sidebar() {
                     alt="profilepicture"
                 />
                 <span className="font-medium text-lg tracking-wider ml-4">
-                    SID KARTHIK #2702
+                    {user.displayName}
                 </span>
                 <img
                     className="h-3 ml-5 object-contain  "
@@ -71,5 +113,4 @@ function Sidebar() {
         </div>
     )
 }
-
 export default Sidebar
