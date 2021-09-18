@@ -1,5 +1,11 @@
+import Sidebar from '../components/Sidebar'
+import Body from '../components/Sidebar/body'
+
 export default function dashboard() {
     return (
-        <p className="text-4xl text-red-500 text-center align-middle">Hello World!</p>
+        <div className="grid grid-cols-2 w-full bg-background-body max-w-screen">
+            <Sidebar />
+            <Body />
+        </div>
     )
 }
